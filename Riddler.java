@@ -1,65 +1,90 @@
+//дДОБАВИТЬ КОНСТРУКТОРЫ И СОЗДАТЬ НОВЫЙ ОБЪЕДИНЯЮЩИЙ КЛАСС
+// стр 269
+
 package SomeTask;
 
 import java.util.Scanner;
+import java.lang.Math;
 
 public class Riddler {
     public static void main(String[] args) {
-        System.out.println("Hello,..");
-
+        System.out.println("Привет, ");
         gameChoose();
     }
+    public static void gameChoose() {
+        String choose;
+        String one = "Угадать";
+        String two = "Загадать";
+        do { System.out.println("Выбери игру:");
+           System.out.println("1. Угадай число" +
+                   "\n" + "2. Загадай число");
+            Scanner scanner = new Scanner(System.in);
+            choose = scanner.nextLine();
+            if (choose == one)
+                gameOne();
+            else if (choose == two) {
+                gameTwo();
+            }else {
+                System.out.println("Введи" + ("Угадать") + "или" + ("Загадать"));
+            }
 
-    public static int gameChoose() {
-        System.out.println("Please, choose the game:");
-        System.out.println("1 : Guess my number from 0 to 100" +
-            "\n" + "2 : I guess your number from 0 to 100");
-        Scanner scanner = new Scanner(System.in);
-        int choose = scanner.nextInt();
-        if (choose == 1)
-            gameOne();
-         /*else if (choose == 2) {
-            gameTwo();
-        } */else {
-            System.out.println("Choose between 1 or 2");
-        }
-        return gameChoose();
+       } while (choose != one && choose != two);
+
     }
 
-    public static int gameOne() {
-        int unknownNum, userNum, TryCount = 0;
+    public static void gameOne() {
+        int unknownNum, userNum;
         Scanner num = new Scanner(System.in);
-        unknownNum = (int) Math.floor(Math.random() * 100);
+        unknownNum = (int)Math.random() * 101;
+        String end = num.nextLine();
         do {
-            TryCount++;
-            System.out.println("Enter you num: ");
+            System.out.println("Поехали. Угадай мое число: ");
             userNum = num.nextInt();
             if (userNum > unknownNum)
-                System.out.println("Need less");
+                System.out.println("меньше");
             else if (userNum < unknownNum)
-                System.out.println("Need more");
+                System.out.println("больше");
             else {
-                System.out.println("You're right");
+                System.out.println("Ты угадал!");
                 gameChoose();
                 }
-        } while (userNum != unknownNum);
-        return userNum;
-
+        } while (userNum != unknownNum || endGame(end));
     }
 
-    /*public static int gameTwo() {
-    System.out.println("Enter you num: ");
-        int progNum, TryCount = 0;
+    public static void gameTwo() {
+        System.out.println("Загадай число, как загадаешь, дай знать");
+        String a = "загадал";
+        String less = "меньше";
+        String more = "больше";
+        startGame(a);
         String unknownNum;
+        int array[] = new int[100];
+        int low = 0;
+        int high = array.length -1;
         Scanner num = new Scanner(System.in);
-        do {
-            TryCount++;
-            progNum = (int)Math.floor(Math.random()*100;
-            System.out.println(progNum);
+
+        while(low <= high) {
+            int middle = low + (high - low) / 2;
             unknownNum = num.nextLine();
-            if( unknownNum == "less" )
-                progNum = 
+            System.out.println(middle);
+
+            if (unknownNum == less) {
+                high = middle - 1;
+            } else if (unknownNum == more)
+            low = middle + 1;
         }
+    }
 
+    private static void startGame(String start) {
+        Scanner n = new Scanner(System.in);
+        start = n.nextLine();
+    }
 
-    }*/
+    private static boolean endGame(String end) {
+        if (end == "выйти")
+            return true;
+        return false;
+    }
+
 }
+

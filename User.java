@@ -1,34 +1,37 @@
 package SomeTask;
-
+import java.util.Arrays;
 import java.util.Scanner;
 
-import static jdk.javadoc.internal.doclets.toolkit.util.Utils.toUpperCase;
 
 public class User {
-    private String name;
+    String name;
 
     public static void main(String[] args) {
+        boolean res2;
         String name;
-        Scanner scanner = new Scanner(System.in);
         do {
-            System.out.print("Enter your name: ");
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Введите имя: ");
             name = scanner.nextLine();
             firstLetterUp(name);
-            onlySymbols(name);
-        } while (name.isEmpty());
+            res2 = onlyLetters(name);
+        } while (res2 || name.isEmpty());
     }
 
-    private static String firstLetterUp(String name) {
-        return toUpperCase(name.substring(0,1)) + name.substring(1);
-    }
-
-    private static String onlySymbols(String name) {
-        for(int i = 0; i < name.length(); i++) {
-            if(name.charAt(i) < 9 || name.charAt(i) > 0) {
-                System.out.println("Error, you entered name, which have number");
-            }
-            break;
+    public static void firstLetterUp(String name) {
+        if (!name.isEmpty()) {
+            String a = name.substring(0, 1);
+            String result = a.toUpperCase() + name.substring(1);
         }
-        return name;
     }
+
+    public static boolean onlyLetters(String name) {
+        String[] array = {"1", "2", "3", "4", "5","6","7","8","9","0"};
+        Boolean result = Arrays.stream(array).anyMatch(e -> name.contains(e));
+        if (result) {
+            System.out.println("Ошибка, число в имени");
+        }
+        return result;
+    }
+
 }
