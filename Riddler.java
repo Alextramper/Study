@@ -1,78 +1,88 @@
-//дДОБАВИТЬ КОНСТРУКТОРЫ И СОЗДАТЬ НОВЫЙ ОБЪЕДИНЯЮЩИЙ КЛАСС
-// стр 269
+
 
 package SomeTask;
 
+import java.util.InputMismatchException;
+import java.util.Random;
 import java.util.Scanner;
 import java.lang.Math;
 
 public class Riddler {
-    public static void main(String[] args) {
-        System.out.println("Привет, ");
-        gameChoose();
-    }
-    public static void gameChoose() {
+    boolean end;
+
+    public void gameChoose() {
         String choose;
-        String one = "Угадать";
-        String two = "Загадать";
+        String one = "угадать";
+        String two = "загадать";
         do { System.out.println("Выбери игру:");
-           System.out.println("1. Угадай число" +
-                   "\n" + "2. Загадай число");
+           System.out.println("1. Угадать число" +
+                   "\n" + "2. Загадать число");
             Scanner scanner = new Scanner(System.in);
             choose = scanner.nextLine();
-            if (choose == one)
+            if( choose.equals(one) )
                 gameOne();
-            else if (choose == two) {
+            else if (choose.equals(two)) {
                 gameTwo();
             }else {
-                System.out.println("Введи" + ("Угадать") + "или" + ("Загадать"));
+                System.out.println("Введи " + ("угадать ") + "или " + ("загадать"));
             }
 
-       } while (choose != one && choose != two);
+       } while ( !choose.equals(one) || !choose.equals(two) );
 
     }
 
-    public static void gameOne() {
-        int unknownNum, userNum;
+    public void gameOne() {
+           int unknownNum;
+           String userNum;
         Scanner num = new Scanner(System.in);
-        unknownNum = (int)Math.random() * 101;
-        String end = num.nextLine();
+        Random n = new Random();
+        unknownNum = n.nextInt(100);
+        System.out.println("Поехали. Угадай мое число: ");
+        int i;
+
         do {
-            System.out.println("Поехали. Угадай мое число: ");
-            userNum = num.nextInt();
-            if (userNum > unknownNum)
+            userNum = num.nextLine();
+            end = endGame(userNum);
+             i = Integer.parseInt(userNum);
+            if (i > unknownNum)
                 System.out.println("меньше");
-            else if (userNum < unknownNum)
+            else if (i < unknownNum)
                 System.out.println("больше");
             else {
                 System.out.println("Ты угадал!");
                 gameChoose();
                 }
-        } while (userNum != unknownNum || endGame(end));
+        } while (i != unknownNum || !end);
     }
 
-    public static void gameTwo() {
-        System.out.println("Загадай число, как загадаешь, дай знать");
+    public void gameTwo() {
+        System.out.println("Загадай число, как загадаешь, напиши \"загадал\"");
         String a = "загадал";
         String less = "меньше";
         String more = "больше";
         startGame(a);
         String unknownNum;
-        int array[] = new int[100];
         int low = 0;
-        int high = array.length -1;
+        int high = 100;
+        int middle;
         Scanner num = new Scanner(System.in);
 
-        while(low <= high) {
-            int middle = low + (high - low) / 2;
-            unknownNum = num.nextLine();
+        while (!end) {
+            middle = low + (high - low) / 2;
             System.out.println(middle);
+            unknownNum = num.nextLine();
+            end = endGame(unknownNum);
 
-            if (unknownNum == less) {
-                high = middle - 1;
-            } else if (unknownNum == more)
-            low = middle + 1;
+            if (unknownNum.equals("меньше")) {
+                high = middle;
+            } else if (unknownNum.equals("больше")) {
+                low = middle;
+            } else if (unknownNum.equals("верно")) {
+                System.out.println("Ура! Спасибо за игру, чувак!");
+                gameChoose();
+            }
         }
+
     }
 
     private static void startGame(String start) {
@@ -81,9 +91,12 @@ public class Riddler {
     }
 
     private static boolean endGame(String end) {
-        if (end == "выйти")
-            return true;
-        return false;
+        String eq = "выйти";
+        Boolean res = end.equals(eq);
+        if (res) {
+            System.out.println("До встречи!");
+        }
+        return res;
     }
 
 }
