@@ -43,11 +43,7 @@ public class Riddler {
             do {
                 try {
                     userNum = num.next();
-
-                    /*if (userNum.equals("выйти")) {
-                        System.out.println("До свидания!");
-                        break;
-                    }*/
+                    
                     if (Integer.parseInt(userNum) > unknownNum) {
                         System.out.println("меньше");
                     } else if (Integer.parseInt(userNum) < unknownNum) {
