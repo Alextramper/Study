@@ -1,6 +1,5 @@
 package SomeTask;
 
-import javax.print.MultiDocPrintService;
 
 public class Game {
     public static void main(String[] args) {
@@ -11,6 +10,5 @@ public class Game {
             riddler.gameChoose();
 
     }
-
 
 }
