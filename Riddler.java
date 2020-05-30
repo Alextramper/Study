@@ -10,25 +10,27 @@ public class Riddler {
 
     public void gameChoose() {
         Scanner scanner = new Scanner(System.in);
-        String choose;
+        String choose = "";
         String one = "угадать";
         String two = "загадать";
         System.out.println("Выбери игру:");
         System.out.println("1.Угадать число" +
                 "\n" + "2.Загадать число");
-        do {
+        while (!endGame(choose)) {
                 choose = scanner.nextLine();
                 if (choose.equals(one)) {
                     System.out.println("Поехали. Угадай мое число: ");
                     gameOne();
+                    break;
                 } else if (choose.equals(two)) {
                     System.out.println("Загадай число, как загадаешь, пиши \"загадал\". " +
                             "Если твое число меньше, пиши \"меньше\", и \"больше\" или \"верно\" соответственно");
                     gameTwo();
-                } else {
+                    break;
+                } else if (!choose.equals("выйти")){
                     System.out.println("Введи " + ("угадать ") + "или " + ("загадать"));
                 }
-       } while (choose.equals(one) || choose.equals(two) || !endGame(choose));
+       }
 
     }
 
@@ -84,6 +86,7 @@ public class Riddler {
             } else if (unknownNum.equals(right)) {
                 System.out.println("Ура! Спасибо за игру!");
                 gameChoose();
+                break;
             }
         }
 
